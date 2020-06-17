@@ -6,11 +6,12 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import TwitterIcon from '@material-ui/icons/Twitter';
 import { IEvent, ILink } from '../../shared/interfaces';
+import theme from '../../assets/mui-theme';
+import Button from '@material-ui/core/Button';
 
 export interface IState {
   isExpandOpen: boolean
@@ -25,11 +26,25 @@ const StyledCard = styled(Card)({
   borderRadius: 3,
   margin: 5,
   padding: 0,
-  width: 500,
   maxWidth: `90%`,
   marginLeft: 'auto',
   marginRight: 'auto'
 });
+
+const LocationHeader = styled('h3')({
+  backgroundColor: theme.palette.secondary.main,
+  padding: '10px',
+  margin: 0,
+  fontWeight: 'bold',
+  color: 'white'
+});
+
+const Video = styled('video')({
+  width: '100%',
+  height: 'auto',
+  maxHeight: '500px'
+});
+
 
 export class VideoCard extends React.Component<IProps, {}> {
 
@@ -41,6 +56,23 @@ export class VideoCard extends React.Component<IProps, {}> {
     isExpandOpen: false
   }
 
+  generateSourceLink = (source: any) => {
+    if (source.includes('twitter.com')) {
+      return (
+        <span>
+        <TwitterIcon></TwitterIcon>
+        <a href={source}>
+          {`${source.split('/')[3]}`}
+        </a>
+      </span>
+      )
+    } else {
+      return (
+        <a href={source}>{source}</a>
+      )
+    }
+  }
+
   handleExpandClick = () => {
     this.setState({isExpandOpen: !this.state.isExpandOpen});
   };
@@ -48,33 +80,31 @@ export class VideoCard extends React.Component<IProps, {}> {
 
   render() {
     if (!this.props.event) { return "...loading"};
-
     const { isExpandOpen } = this.state;
     const { event } = this.props;
-    const subheader = `${ event.state }, ${ event.date_text }`;
 
     return (
         <StyledCard>
+          <LocationHeader>
+            {event.city}, {event.state}
+          </LocationHeader>
           <CardHeader
             title={ event.name }
-            subheader={ subheader }
+            subheader= { event.date_text }
           />
           {event.links.map((link: ILink, index) => {
             if (index === 0) {
               return (
                 <div key={`${event.id}-media`}>
                   {link.spaces_url ?
-                    <CardMedia
-                      component="video"
-                      src={link.spaces_url}
-                      controls
-                      title={event.name}>
-                    </CardMedia>
-                  : null }
+                    <Video controls title={event.name}>
+                      <source src={link.spaces_url} type="video/mp4" />
+                    </Video>
+                  :
+                    null
+                  }
                   <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                      Credit: <a href={link.link}>{link.link}</a>
-                    </Typography>
+                    Source: {this.generateSourceLink(link.link)}
                   </CardContent>
                 </div>
               )
@@ -83,15 +113,16 @@ export class VideoCard extends React.Component<IProps, {}> {
 
           {event.links.length > 1 ?
               <CardActions disableSpacing>
-                  View More
-                  <IconButton
-                    className={ clsx('expand', {'expanded': isExpandOpen}) }
-                    onClick={ this.handleExpandClick }
-                    aria-expanded={ isExpandOpen }
-                    aria-label="show more"
-                  >
-                    <ExpandMoreIcon />
-                  </IconButton>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={ this.handleExpandClick }
+                  aria-expanded={ isExpandOpen }
+                  aria-label="show more"
+                >
+                  View More Coverage
+                  <ExpandMoreIcon className={ clsx('expand', {'expanded': isExpandOpen}) }/>
+                </Button>
               </CardActions>
           : null}
 
@@ -103,17 +134,14 @@ export class VideoCard extends React.Component<IProps, {}> {
                   return (
                     <div key={`${event.id}-collapsed`}>
                       {link.spaces_url ?
-                        <CardMedia
-                          component="video"
-                          src={link.spaces_url}
-                          controls
-                          title={event.name}>
-                        </CardMedia>
-                      : null }
+                        <Video controls title={event.name}>
+                          <source src={link.spaces_url} type="video/mp4" />
+                        </Video>
+                      :
+                        null
+                      }
                       <CardContent>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                          Credit: <a href={link.link}>{link.link}</a>
-                        </Typography>
+                        Source: {this.generateSourceLink(link.link)}
                       </CardContent>
                     </div>
                   )

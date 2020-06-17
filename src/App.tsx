@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import { ThemeProvider } from '@material-ui/styles';
 
+import theme from './assets/mui-theme';
 import cityData from './assets/city-geocode-top-1000.json';
 import { IEvent, IGeocodeCity } from './shared/interfaces';
 import CardList from './components/card-list/card-list';
@@ -131,12 +133,14 @@ export class App extends React.Component<IProps, IState> {
     )
     return (
       <div>
-        <Navigation
-          cardList={cardList}
-          map={map}
-          menuClickHandler={this.menuClickHandler.bind(this)}
-          pagination={pagination}>
-        </Navigation>
+        <ThemeProvider theme={theme}>
+          <Navigation
+            cardList={cardList}
+            map={map}
+            menuClickHandler={this.menuClickHandler.bind(this)}
+            pagination={pagination}>
+          </Navigation>
+        </ThemeProvider>
       </div>
     );
   }
