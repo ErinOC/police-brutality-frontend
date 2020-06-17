@@ -1,3 +1,18 @@
+## About
+
+This is a frontend to display the police brutality videos provided by the API at https://github.com/nickatnight/policebrutality.io
+
+## To Do:
+
+- Add styling
+- Add search functionality
+- Use a geocode API call to show smaller towns on the map
+- Add paths by ID for easy sharing
+- Add loading
+- Scroll to top after pagination click
+
+## Running the Application:
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
