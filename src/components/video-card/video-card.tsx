@@ -12,6 +12,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import { IEvent, ILink } from '../../shared/interfaces';
 import theme from '../../assets/mui-theme';
 import Button from '@material-ui/core/Button';
+import { Link } from "react-router-dom";
 
 export interface IState {
   isExpandOpen: boolean
@@ -82,7 +83,7 @@ export class VideoCard extends React.Component<IProps, {}> {
     if (!this.props.event) { return "...loading"};
     const { isExpandOpen } = this.state;
     const { event } = this.props;
-
+    let individualLink = `/incident/${event.id}`;
     return (
         <StyledCard>
           <LocationHeader>
@@ -92,7 +93,11 @@ export class VideoCard extends React.Component<IProps, {}> {
             title={ event.name }
             subheader= { event.date_text }
           />
+          <div>
+            <Link to={individualLink}>Share</Link>
+          </div>
           {event.links.map((link: ILink, index) => {
+
             if (index === 0) {
               return (
                 <div key={`${event.id}-media`}>

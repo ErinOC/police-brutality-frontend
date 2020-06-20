@@ -6,7 +6,7 @@ import {
     withScriptjs,
 } from "react-google-maps";
 
-import { IEvent } from '../../shared/interfaces';
+import { IEvent } from '../../../shared/interfaces';
 
 interface MapsParams {
     googleMapURL: string;
@@ -17,7 +17,8 @@ interface MapsParams {
     markerClickHandler: any;
 }
 
-export const Map = withScriptjs(withGoogleMap((props: MapsParams) => {
+
+const Map = withScriptjs(withGoogleMap((props: MapsParams) => {
     return (
         <GoogleMap
             defaultZoom={3}
@@ -38,3 +39,5 @@ export const Map = withScriptjs(withGoogleMap((props: MapsParams) => {
         </GoogleMap>
     )
 }));
+
+export default Map;
