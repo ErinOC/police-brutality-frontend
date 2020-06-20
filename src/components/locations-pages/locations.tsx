@@ -51,6 +51,8 @@ export default class Locations extends React.Component<IProps, IState> {
     let { filteredEvents } = this.state;
     let { allEvents } = this.props
     let selectedCity: any = filteredEvents[0];
+    let API_KEY = '';
+    let mapsUrl = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
     return (
         <div>
             { selectedCity ?
@@ -62,7 +64,7 @@ export default class Locations extends React.Component<IProps, IState> {
             <Grid container spacing={3}>
                 <Grid item lg={4} md={6} xs={12}>
                     <Map
-                        googleMapURL="https://maps.googleapis.com/maps/api/js?key={API_KEY}"
+                        googleMapURL={mapsUrl}
                         loadingElement={<div style={{ height: `100%` }} />}
                         containerElement={<div style={{ height: `400px` }} />}
                         mapElement={<div style={{ height: `100%` }} />}

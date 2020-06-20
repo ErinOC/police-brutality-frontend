@@ -11,9 +11,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import Home from './components/home/home';
-import Locations from './components/locations/locations';
-import Incidents from './components/incidents/incidents';
-import SingleIncident from './components/incidents/single-incident';
+import Locations from './components/locations-pages/locations';
+import Incidents from './components/incidents-pages/incidents';
+import SingleIncident from './components/incidents-pages/single-incident';
 import { assignGeocode } from './shared/helper-functions';
 import { IEvent  } from './shared/interfaces';
 
@@ -61,6 +61,9 @@ export default class App extends React.Component<IProps, IState> {
 
   render() {
     let allEvents = this.state.allEvents;
+    if (this.state.isFetching) {
+      return <div>...loading</div>
+    }
     return (
       <div>
         <Router>
@@ -77,7 +80,8 @@ export default class App extends React.Component<IProps, IState> {
               <Route path="/" exact component={Home}></Route>
               <Route path="/incidents"
                      render={(props) => <Incidents allEvents={allEvents}></Incidents>} />
-              <Route path="/incident/:id" component={SingleIncident}></Route>
+              <Route path="/incident/:id"
+                     render={(props) => <SingleIncident allEvents={allEvents}></SingleIncident>} />
               <Route path="/locations"
                      render={(props) => <Locations allEvents={allEvents}></Locations>} />
           </Switch>

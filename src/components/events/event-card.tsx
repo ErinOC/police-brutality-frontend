@@ -47,7 +47,7 @@ const Video = styled('video')({
 });
 
 
-export class VideoCard extends React.Component<IProps, {}> {
+export class EventCard extends React.Component<IProps, {}> {
 
   constructor(props: IProps) {
     super(props);

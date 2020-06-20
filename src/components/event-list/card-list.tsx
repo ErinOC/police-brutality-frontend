@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from '@material-ui/core/styles';
 import { IEvent } from '../../shared/interfaces';
-import { VideoCard } from '../video-card/video-card';
+import { EventCard } from '../events/event-card';
 import { EVENTS_PER_PAGE } from '../../shared/consts';
 
 interface IProps {
@@ -43,7 +43,7 @@ export default class CardList extends React.Component<IProps, IState> {
         {paginatedEvents.map((event: IEvent, index) => {
           return (
             <StyledLi key={ event.id }>
-              <VideoCard event={event}></VideoCard>
+              <EventCard event={event}></EventCard>
             </StyledLi>
           )
         })}
