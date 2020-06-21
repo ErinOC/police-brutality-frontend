@@ -100,7 +100,7 @@ export default class App extends React.Component<IProps, IState> {
               <footer>
                 <p>
                   Built using <a href="https://github.com/2020PB/police-brutality">crowd-sourced reports</a> backed up
-                  to video by and made accessible via API by <a href="https://github.com/2020PB/police-brutality">nickatnight</a>.
+                  to video by and made available via API by <a href="https://github.com/2020PB/police-brutality">nickatnight</a>.
                 </p>
               </footer>
           </MuiThemeProvider>

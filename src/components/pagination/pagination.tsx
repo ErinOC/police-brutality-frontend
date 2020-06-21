@@ -10,6 +10,7 @@ export default function PaginationComponent(props: any) {
         setPage(value);
         // Informs parent element of selected page:
         props.paginationClickHandler(value);
+        window.scrollTo(0, 0);
     };
     const eventsTotal = props.events.length;
     let count = Math.ceil(eventsTotal / EVENTS_PER_PAGE);

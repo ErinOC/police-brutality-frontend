@@ -6,8 +6,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import TwitterIcon from '@material-ui/icons/Twitter';
 import { IEvent, ILink } from '../../shared/interfaces';
 import theme from '../../assets/mui-theme';
 import Button from '@material-ui/core/Button';
@@ -15,6 +13,10 @@ import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+import RedditIcon from '@material-ui/icons/Reddit';
 
 export interface IState {
   isExpandOpen: boolean,
@@ -88,16 +90,25 @@ export class EventCard extends React.Component<IProps, {}> {
   generateSourceLink = (source: any) => {
     if (source.includes('twitter.com')) {
       return (
-        <span>
-        <TwitterIcon></TwitterIcon>
         <a href={source}>
-          {`${source.split('/')[3]}`}
+          <span>{`${source.split('/')[3]}`}</span> <TwitterIcon fontSize="small"></TwitterIcon>
         </a>
-      </span>
+      )
+    } else if (source.includes('youtube.com')) {
+      return (
+        <a href={source}>
+          <span>Source:</span> <YouTubeIcon fontSize="small"></YouTubeIcon>
+        </a>
+      )
+    } else if (source.includes('reddit.com')) {
+      return (
+        <a href={source}>
+          <span>Source:</span> <RedditIcon fontSize="small"></RedditIcon>
+        </a>
       )
     } else {
       return (
-        <a href={source}>{source}</a>
+        <a href={source}>Source</a>
       )
     }
   }
@@ -163,7 +174,9 @@ export class EventCard extends React.Component<IProps, {}> {
             title={ event.name }
           />
           {event.links.map((link: ILink, index) => {
-            if (index === 0) {
+            // TODO: Sometimes the spaces_url will be blank.
+            // Need to handle this better.
+            if (index === 0 && link.spaces_url) {
               return (
                 <div key={`${event.id}-media`}>
                   {link.spaces_url ?
@@ -173,9 +186,7 @@ export class EventCard extends React.Component<IProps, {}> {
                   :
                     null
                   }
-                  <CardContent>
-                    Source: {this.generateSourceLink(link.link)}
-                  </CardContent>
+                  <div className="source-link">{this.generateSourceLink(link.link)}</div>
                 </div>
               )
             }
@@ -198,7 +209,7 @@ export class EventCard extends React.Component<IProps, {}> {
           <Collapse in={isExpandOpen} timeout="auto" unmountOnExit>
             <CardContent>
               {event.links.map((link: ILink, index) => {
-                if (index !== 0) {
+                if (index !== 0 && link.spaces_url) {
                   return (
                     <div key={`${event.id}-collapsed`}>
                       {link.spaces_url ?
@@ -208,9 +219,7 @@ export class EventCard extends React.Component<IProps, {}> {
                       :
                         null
                       }
-                      <CardContent>
-                        Source: {this.generateSourceLink(link.link)}
-                      </CardContent>
+                      <div className="source-link">{this.generateSourceLink(link.link)}</div>
                     </div>
                   )
                 }
