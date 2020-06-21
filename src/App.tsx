@@ -19,7 +19,8 @@ import { assignGeocode } from './shared/helper-functions';
 import { IEvent  } from './shared/interfaces';
 import theme from './assets/mui-theme';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import Grid from '@material-ui/core/Grid';
+import { styled } from '@material-ui/core/styles';
 
 interface IProps { }
 
@@ -69,30 +70,39 @@ export default class App extends React.Component<IProps, IState> {
       <div>
         <Router>
           <MuiThemeProvider theme={theme}>
-            <AppBar position="static">
-              <Toolbar>
-                <Link to="/" color="secondary">
-                  <Typography variant="h1">
-                    policebrutality.io
-                  </Typography>
-                </Link>
-              </Toolbar>
-            </AppBar>
-            {this.state.isFetching ?
-              <div className="full-width align-center">
-                <CircularProgress color="secondary" className="margin-large"/>
-              </div>
-            :
-              <Switch>
-                  <Route path="/" exact component={Home}></Route>
-                  <Route path="/incidents"
-                        render={(props) => <Incidents allEvents={allEvents}></Incidents>} />
-                  <Route path="/incident/:id"
-                        render={(props) => <SingleIncident allEvents={allEvents}></SingleIncident>} />
-                  <Route path="/locations"
-                        render={(props) => <Locations allEvents={allEvents}></Locations>} />
-              </Switch>
-            }
+
+              <AppBar position="static">
+                <Toolbar>
+                  <Link to="/" color="secondary">
+                    <Typography variant="h1">
+                      policebrutality.io
+                    </Typography>
+                  </Link>
+                </Toolbar>
+              </AppBar>
+
+              {this.state.isFetching ?
+                <div className="full-width align-center">
+                  <CircularProgress color="secondary" className="margin-large"/>
+                </div>
+              :
+                <Switch>
+                    <Route path="/" exact component={Home}></Route>
+                    <Route path="/incidents"
+                          render={(props) => <Incidents allEvents={allEvents}></Incidents>} />
+                    <Route path="/incident/:id"
+                          render={(props) => <SingleIncident allEvents={allEvents}></SingleIncident>} />
+                    <Route path="/locations"
+                          render={(props) => <Locations allEvents={allEvents}></Locations>} />
+                </Switch>
+              }
+
+              <footer>
+                <p>
+                  Built using <a href="https://github.com/2020PB/police-brutality">crowd-sourced reports</a> backed up
+                  to video by and made accessible via API by <a href="https://github.com/2020PB/police-brutality">nickatnight</a>.
+                </p>
+              </footer>
           </MuiThemeProvider>
         </Router>
       </div>

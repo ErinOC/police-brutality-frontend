@@ -4,17 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
 import { EVENTS_PER_PAGE } from '../../shared/consts';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
-  },
-}));
-
 
 export default function PaginationComponent(props: any) {
-    const classes = useStyles();
     const handleChange = (event: any, value: any) => {
         setPage(value);
         // Informs parent element of selected page:
@@ -32,9 +23,12 @@ export default function PaginationComponent(props: any) {
 
     if (eventsTotal > EVENTS_PER_PAGE) {
       return (
-          <div className={classes.root}>
-            <Typography>Page: {page}</Typography>
-            <Pagination count={count} page={page} onChange={handleChange} />
+          <div className="pagination-wrapper">
+            <Pagination
+              color="secondary"
+              count={count}
+              page={page}
+              onChange={handleChange} />
           </div>
         );
     }

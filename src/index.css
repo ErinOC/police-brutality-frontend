@@ -1,3 +1,8 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -6,6 +11,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #e0e0e0;
+  margin: 0 0 100px; /* bottom = footer height */
 }
 
 code {
@@ -30,7 +36,12 @@ li {
 }
 
 a {
+  color: gray;
   text-decoration: none;
+}
+a:hover,
+a:visited {
+  color: black;
 }
 
 .margin-large {
@@ -95,7 +106,15 @@ a {
 }
 
 .align-center {
+  text-align: right;
+}
+
+.align-center {
   text-align: center;
+}
+
+.align-left {
+  text-align: left;
 }
 
 .weight-bold {
@@ -114,6 +133,14 @@ a {
   transform: rotate(180deg);
 }
 
+.pagination-wrapper {
+  width: 400px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 25px;
+}
+
 .arrow {
   border: solid black;
   border-width: 0 3px 3px 0;
@@ -123,4 +150,15 @@ a {
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+footer  {
+  margin-top: 50px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  min-height: 50px;
+  width: 100%;
+  background-color: white;
+  padding: 25px;
 }
