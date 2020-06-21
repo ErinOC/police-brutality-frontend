@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { styled } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
@@ -12,9 +11,13 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import { IEvent, ILink } from '../../shared/interfaces';
 import theme from '../../assets/mui-theme';
 import Button from '@material-ui/core/Button';
+import { Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 
 export interface IState {
-  isExpandOpen: boolean
+  isExpandOpen: boolean,
+  shouldDisplayLocation: boolean;
 };
 
 interface IProps {
@@ -26,9 +29,10 @@ const StyledCard = styled(Card)({
   borderRadius: 3,
   margin: 5,
   padding: 0,
-  maxWidth: `90%`,
+  width: `90%`,
   marginLeft: 'auto',
-  marginRight: 'auto'
+  marginRight: 'auto',
+  maxWidth: '600px'
 });
 
 const LocationHeader = styled('h3')({
@@ -46,15 +50,28 @@ const Video = styled('video')({
 });
 
 
-export class VideoCard extends React.Component<IProps, {}> {
+export class EventCard extends React.Component<IProps, {}> {
 
   constructor(props: IProps) {
     super(props);
   }
 
   state: IState = {
-    isExpandOpen: false
+    isExpandOpen: false,
+    shouldDisplayLocation: true
   }
+
+  componentDidMount() {
+    const history = createBrowserHistory();
+    const path = history.location.pathname;
+
+    if (path.includes('locations')) {
+      this.setState({
+        shouldDisplayLocation: false
+      })
+    }
+  }
+
 
   generateSourceLink = (source: any) => {
     if (source.includes('twitter.com')) {
@@ -80,19 +97,23 @@ export class VideoCard extends React.Component<IProps, {}> {
 
   render() {
     if (!this.props.event) { return "...loading"};
-    const { isExpandOpen } = this.state;
+    const { isExpandOpen, shouldDisplayLocation } = this.state;
     const { event } = this.props;
+    let individualLink = `/incident/${event.id}`;
 
     return (
         <StyledCard>
-          <LocationHeader>
-            {event.city}, {event.state}
-          </LocationHeader>
+          { shouldDisplayLocation ?
+            <LocationHeader>
+              {event.city}, {event.state}
+            </LocationHeader>
+          : null }
           <CardHeader
             title={ event.name }
             subheader= { event.date_text }
           />
           {event.links.map((link: ILink, index) => {
+
             if (index === 0) {
               return (
                 <div key={`${event.id}-media`}>
@@ -112,7 +133,7 @@ export class VideoCard extends React.Component<IProps, {}> {
           })}
 
           {event.links.length > 1 ?
-              <CardActions disableSpacing>
+              <CardActions disableSpacing className="cta">
                 <Button
                   variant="contained"
                   color="secondary"
@@ -123,8 +144,29 @@ export class VideoCard extends React.Component<IProps, {}> {
                   View More Coverage
                   <ExpandMoreIcon className={ clsx('expand', {'expanded': isExpandOpen}) }/>
                 </Button>
+
+                <Button
+                  variant="contained"
+                  color="primary"
+                  aria-label="copy link to this incident"
+                >
+                  Copy Link
+                  <LinkOutlinedIcon />
+                </Button>
+
               </CardActions>
-          : null}
+            :
+                <CardActions disableSpacing className="cta">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  aria-label="copy link to this incident"
+                >
+                  Copy Link
+                  <LinkOutlinedIcon />
+                </Button>
+              </CardActions>
+            }
 
 
           <Collapse in={isExpandOpen} timeout="auto" unmountOnExit>
@@ -149,7 +191,6 @@ export class VideoCard extends React.Component<IProps, {}> {
               })}
             </CardContent>
           </Collapse>
-
         </StyledCard>
     )
   }

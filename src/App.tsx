@@ -1,151 +1,97 @@
 import React from 'react';
-import axios from 'axios';
-import { ThemeProvider } from '@material-ui/styles';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import axios from 'axios'
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
+import Home from './components/home/home';
+import Locations from './components/locations-pages/locations';
+import Incidents from './components/incidents-pages/incidents';
+import SingleIncident from './components/incidents-pages/single-incident';
+import { assignGeocode } from './shared/helper-functions';
+import { IEvent  } from './shared/interfaces';
 import theme from './assets/mui-theme';
-import cityData from './assets/city-geocode-top-1000.json';
-import { IEvent, IGeocodeCity } from './shared/interfaces';
-import CardList from './components/card-list/card-list';
-import PaginationComponent from './components/pagination/pagination';
-import { Map } from './components/map/map';
-import Navigation from './components/navigation/navigation';
 
-interface IProps {
-}
+interface IProps { }
 
 interface IState {
+  isFetching: boolean;
   geocodeFilter: any;
-  allEvents: IEvent[];
-  filteredEvents: IEvent[];
-  page: number;
+  page: number,
+  allEvents: IEvent[],
+  filteredEvents: IEvent[],
 }
 
-export class App extends React.Component<IProps, IState> {
-
+export default class App extends React.Component<IProps, IState> {
   constructor(props: any) {
     super(props);
     this.state = {
+      isFetching: false,
       geocodeFilter: {},
       page: 1,
       allEvents: [],
       filteredEvents: []
-    };
-  }
-
-  public markerClickHandler(event: IEvent) {
-    let filteredEvents = this.geocodeFilteredResults(event.marker);
-
-    this.setState({
-      geocodeFilter: event.marker,
-      filteredEvents,
-      page: 1
-    });
-  }
-
-  public paginationClickHandler(page: number) {
-    this.setState({
-      page
-    });
-  }
-
-  public menuClickHandler(type: string) {
-    if (type === 'all') {
-      this.setState({
-        page: 1,
-        filteredEvents: this.state.allEvents,
-        geocodeFilter: {},
-      });
     }
   }
 
   componentDidMount() {
-      axios({
-        method: 'get',
-        url: 'http://api.policebrutality.io/v1/videos',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(res => {
-        let allEvents = this.assignGeocode(res.data.data);
-        this.setState({
-          allEvents,
-          filteredEvents: allEvents,
-        });
-        this.paginationClickHandler(1);
-      })
-  }
-
-  private assignGeocode(events: IEvent[]): IEvent[] {
-    events.forEach((event: IEvent) => {
-      cityData.forEach((city:  IGeocodeCity) => {
-        let isMatch = (event.city === city.city && event.state === city.state);
-        if (isMatch) {
-          event.marker = {
-            id: event.id,
-            lat: city.latitude,
-            lng: city.longitude
-          }
-        }
-      });
+    this.setState({
+      isFetching: true,
     });
-
-    return events;
-  }
-
-  private geocodeFilteredResults(geocodeInfo: any): IEvent[] {
-    const allEventsCopy = JSON.parse(JSON.stringify(this.state.allEvents));
-
-    return allEventsCopy.filter((event: IEvent) => {
-      if (event.marker) {
-        let meetsFilter = (geocodeInfo.lat === event.marker.lat) && (geocodeInfo.lng === event.marker.lng)
-        if (meetsFilter) {
-          return event;
-        }
+    axios({
+      method: 'get',
+      url: 'http://api.policebrutality.io/v1/videos',
+      headers: {
+          'Content-Type': 'application/json'
       }
+    })
+    .then(res => {
+      let allEvents = assignGeocode(res.data.data);
+      this.setState({
+        isFetching: false,
+        allEvents
+      });
     });
   }
 
   render() {
-    let { page, filteredEvents } = this.state;
-    const map = (
-      <Map
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key={API_KEY}"
-          loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `400px` }} />}
-          mapElement={<div style={{ height: `100%` }} />}
-          markerClickHandler={this.markerClickHandler.bind(this)}
-          events={this.state.allEvents}
-      />
-    );
-    const cardList = (
-      <CardList
-        page={page}
-        events={filteredEvents}>
-      </CardList>
-    )
-    const pagination = (
-      <PaginationComponent
-        events={filteredEvents}
-        paginationClickHandler={this.paginationClickHandler.bind(this)}
-        page={page}>
-      </PaginationComponent>
-    )
+    let allEvents = this.state.allEvents;
+    if (this.state.isFetching) {
+      return <div>...loading</div>
+    }
     return (
       <div>
-        <ThemeProvider theme={theme}>
-          <Navigation
-            cardList={cardList}
-            map={map}
-            menuClickHandler={this.menuClickHandler.bind(this)}
-            pagination={pagination}>
-          </Navigation>
-        </ThemeProvider>
+        <Router>
+          <MuiThemeProvider theme={theme}>
+            <AppBar position="static">
+              <Toolbar>
+                <Link to="/" color="secondary">
+                  <Typography variant="h1">
+                    policebrutality.io
+                  </Typography>
+                </Link>
+              </Toolbar>
+            </AppBar>
+
+            <Switch>
+                <Route path="/" exact component={Home}></Route>
+                <Route path="/incidents"
+                      render={(props) => <Incidents allEvents={allEvents}></Incidents>} />
+                <Route path="/incident/:id"
+                      render={(props) => <SingleIncident allEvents={allEvents}></SingleIncident>} />
+                <Route path="/locations"
+                      render={(props) => <Locations allEvents={allEvents}></Locations>} />
+            </Switch>
+          </MuiThemeProvider>
+        </Router>
       </div>
     );
   }
 }
-
-export default App;
-
-
