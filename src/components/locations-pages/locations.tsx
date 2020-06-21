@@ -5,9 +5,7 @@ import { Route } from "react-router-dom";
 import { IEvent } from '../../shared/interfaces';
 import SingleLocation from './single-location';
 import { styled } from '@material-ui/core/styles';
-import theme from '../../assets/mui-theme';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 
 interface IProps {
   allEvents: any

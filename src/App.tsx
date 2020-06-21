@@ -19,8 +19,6 @@ import { assignGeocode } from './shared/helper-functions';
 import { IEvent  } from './shared/interfaces';
 import theme from './assets/mui-theme';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
-import { styled } from '@material-ui/core/styles';
 
 interface IProps { }
 
@@ -99,8 +97,9 @@ export default class App extends React.Component<IProps, IState> {
 
               <footer>
                 <p>
+                  Maintained on <a href="https://github.com/ErinOC/police-brutality-frontend">Github</a>.
                   Built using <a href="https://github.com/2020PB/police-brutality">crowd-sourced reports</a> backed up
-                  to video by and made available via API by <a href="https://github.com/2020PB/police-brutality">nickatnight</a>.
+                  to video by and made available via <a href="https://github.com/2020PB/police-brutality">API</a>.
                 </p>
               </footer>
           </MuiThemeProvider>

@@ -9,7 +9,6 @@ import Collapse from '@material-ui/core/Collapse';
 import { IEvent, ILink } from '../../shared/interfaces';
 import theme from '../../assets/mui-theme';
 import Button from '@material-ui/core/Button';
-import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 import CopyToClipboard from 'react-copy-to-clipboard';

@@ -1,8 +1,6 @@
 import React from "react";
 import { IEvent } from '../../shared/interfaces';
 import EventList from '../events/event-list';
-import theme from '../../assets/mui-theme';
-
 
 interface IProps {
   events: IEvent[];
