@@ -101,7 +101,7 @@ export default class Locations extends React.Component<IProps, IState> {
                   <Grid item lg={8} md={6} xs={12}>
                     {!selectedCity ?
                       <p>
-                        Click a marker on the map to view items in that location.
+                        Click a marker on the map to view incidents in that city.
                       </p>
                     : null}
                     <Route path="/:name"

@@ -15,8 +15,6 @@ import videoImg from '../../assets/video-screenshot.png';
 import reportImg from '../../assets/report-incident.png';
 import Button from '@material-ui/core/Button';
 
-const githubLink = 'https://github.com/2020PB/police-brutality';
-
 const CardHeaderStyled = styled('h2')({
   backgroundColor: theme.palette.secondary.main,
   padding: '10px',
@@ -24,7 +22,6 @@ const CardHeaderStyled = styled('h2')({
   fontWeight: 'bold',
   color: 'white'
 });
-
 
 export default class Home extends React.Component {
   constructor(props: any) {
@@ -37,7 +34,8 @@ export default class Home extends React.Component {
     return (
         <div className="margin-large">
             <Grid container spacing={6}>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={3} md={2}></Grid>
+                <Grid item xs={12} sm={3} md={4}>
                     <Card className="align-center">
                       <Link to="/incidents">
                         <img src={videoImg} alt="map" className="home-img" />
@@ -45,7 +43,7 @@ export default class Home extends React.Component {
                       </Link>
                     </Card>
                 </Grid>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={3} md={4}>
                     <Card className="align-center">
                       <Link to="/locations">
                         <img src={mapImg} alt="map" className="home-img" />
@@ -53,14 +51,7 @@ export default class Home extends React.Component {
                       </Link>
                     </Card>
                 </Grid>
-                <Grid item xs={12} sm={4}>
-                  <Card className="align-center">
-                      <a target="_blank" href={githubLink}>
-                        <img src={reportImg} alt="map" className="home-img"/>
-                        <span className="home-link">Report Incident (Github)</span>
-                      </a>
-                    </Card>
-                </Grid>
+                <Grid item xs={12} sm={3} md={2}></Grid>
             </Grid>
         </div>
     )

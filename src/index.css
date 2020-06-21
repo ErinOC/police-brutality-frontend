@@ -86,10 +86,6 @@ a:visited {
   filter: grayscale(100%);
 }
 
-.home-img:hover {
-  filter: grayscale(0%);
-}
-
 .full-width {
   display: block;
   width: 100%;
