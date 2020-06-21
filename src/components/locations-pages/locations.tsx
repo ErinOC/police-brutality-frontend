@@ -71,8 +71,7 @@ export default class Locations extends React.Component<IProps, IState> {
     let { filteredEvents } = this.state;
     let { allEvents } = this.props
     let selectedCity: any = filteredEvents[0];
-    let API_KEY = '';
-    let mapsUrl = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
+    let mapsUrl = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_MAPS_API_KEY}`;
     return (
         <div>
             { selectedCity ?

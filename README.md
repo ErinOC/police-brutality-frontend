@@ -2,16 +2,20 @@
 
 This is a frontend to display the police brutality videos provided by the API at https://github.com/nickatnight/policebrutality.io
 
+## Setup:
+
+- This is a standard React app (instructions below).
+- For the Google Maps integration, obtain an API key for Google Maps (https://developers.google.com/maps/documentation/javascript/tutorial).
+  Add a .env file to your root directory and add `REACT_APP_MAPS_API_KEY={your key}`
+
 ## To Do:
 
-- Add styling
 - Add search functionality
 - Use a geocode API call to show smaller towns on the map
-- Add paths by ID for easy sharing
-- Add loading
-- Scroll to top after pagination click
+- Add paths per location for easier sharing
+- Add a form for non-Github users to report incidents
 
-## Running the Application:
+## Setup instructions from React:
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
