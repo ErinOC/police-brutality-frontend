@@ -1,6 +1,7 @@
 import React from "react";
 import { createBrowserHistory } from "history";
 import { IEvent } from '../../shared/interfaces';
+import { EventCard } from '../events/event-card';
 
 interface IProps {
   allEvents: any
@@ -43,8 +44,8 @@ export default class SingleIncident extends React.Component<IProps, IState> {
       return <div>...loading</div>
     }
     return (
-        <div>
-            <h1>Single incident</h1>
+        <div className="margin">
+          <EventCard event={event}></EventCard>
         </div>
     )
   }

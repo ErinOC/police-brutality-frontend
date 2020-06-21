@@ -2,9 +2,12 @@ import React from "react";
 import Map from './map/map';
 import Grid from '@material-ui/core/Grid';
 import { Route } from "react-router-dom";
-
 import { IEvent } from '../../shared/interfaces';
 import SingleLocation from './single-location';
+import { styled } from '@material-ui/core/styles';
+import theme from '../../assets/mui-theme';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 
 interface IProps {
   allEvents: any
@@ -14,6 +17,23 @@ interface IState {
   allEvents: IEvent[],
   filteredEvents: IEvent[],
 }
+
+const StyledGrid = styled(Grid)({
+  backgroundColor: theme.palette.secondary.main,
+  height: '30px',
+  fontWeight: 'bold',
+  color: 'white',
+  paddingLeft: '25px',
+  lineHeight: '25px',
+  fontSize: '1.1rem',
+})
+
+const StyledCard = styled(Card)({
+  border: `1px solid lightgray`,
+  borderRadius: 3,
+  margin: 5,
+  padding: 10,
+});
 
 export default class Locations extends React.Component<IProps, IState> {
   constructor(props: any) {
@@ -56,28 +76,34 @@ export default class Locations extends React.Component<IProps, IState> {
     return (
         <div>
             { selectedCity ?
-              <Grid item xs={12}>
+              <StyledGrid item xs={12} className="subheader">
                 {selectedCity.city}, {selectedCity.state}
-              </Grid>
+              </StyledGrid>
             : null }
 
-            <Grid container spacing={3}>
-                <Grid item lg={4} md={6} xs={12}>
-                    <Map
-                        googleMapURL={mapsUrl}
-                        loadingElement={<div style={{ height: `100%` }} />}
-                        containerElement={<div style={{ height: `400px` }} />}
-                        mapElement={<div style={{ height: `100%` }} />}
-                        markerClickHandler={this.markerClickHandler.bind(this)}
-                        events={allEvents}
-                    />
-                </Grid>
+            <div className="margin">
+              <Grid container spacing={3}>
+                  <Grid item lg={4} md={6} xs={12}>
+                    <StyledCard>
+                      <Map
+                          googleMapURL={mapsUrl}
+                          loadingElement={<div style={{ height: `100%` }} />}
+                          containerElement={<div style={{ height: `400px` }} />}
+                          mapElement={<div style={{ height: `100%` }} />}
+                          markerClickHandler={this.markerClickHandler.bind(this)}
+                          events={allEvents}
+                      />
+                      <p>Currently displays events from the largest 1000 cities in the U.S.</p>
+                      <p>Full functionality coming soon.</p>
+                    </StyledCard>
+                  </Grid>
 
-                <Grid item lg={8} md={6} xs={12}>
-                   <Route path="/:name"
-                          render={(props) => <SingleLocation events={filteredEvents} />} />
-                </Grid>
-            </Grid>
+                  <Grid item lg={8} md={6} xs={12}>
+                    <Route path="/:name"
+                            render={(props) => <SingleLocation events={filteredEvents} />} />
+                  </Grid>
+              </Grid>
+            </div>
         </div>
     )
   }

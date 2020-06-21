@@ -5,6 +5,7 @@ import { EventCard } from './event-card';
 import { EVENTS_PER_PAGE } from '../../shared/consts';
 import PaginationComponent from '../pagination/pagination';
 
+
 interface IProps {
   events: IEvent[];
 }
@@ -14,14 +15,14 @@ export interface IState {
 };
 
 const StyledLi = styled('li')({
-  marginTop: 50,
+  marginBottom: 50,
 })
 
 export default class EventList extends React.Component<IProps, IState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      page: 1
+      page: 1,
     };
   }
 
@@ -52,7 +53,9 @@ export default class EventList extends React.Component<IProps, IState> {
           {paginatedEvents.map((event: IEvent, index) => {
             return (
               <StyledLi key={ event.id }>
-                <EventCard event={event}></EventCard>
+                <EventCard
+                  event={event}>
+                </EventCard>
               </StyledLi>
             )
           })}

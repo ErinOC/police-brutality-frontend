@@ -1,21 +1,34 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { red, cyan } from '@material-ui/core/colors';
+import { red, cyan, grey } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
   palette: {
-    primary: {
-        main: '#292929'
-    },
     secondary: {
       main: cyan[800],
-      light: '#4fb3b',
-      dark: '#005662',
+      light: cyan[500],
+      dark: cyan[900],
+    },
+    primary: { // Reddish
+      main: '#5c0000',
+      light: '#c45953',
+      // #8f2a2a
     },
     text: {
-        secondary: '#FFFFFF'
+      primary: grey[900],
+      secondary: '#FFFFFF'
     },
   },
   typography: {
+    h1: {
+      fontSize: '20px',
+      color: '#FFFFFF'
+    },
+    h2: {
+      color: grey[900]
+    },
+    h5: {
+      color: grey[900]
+    },
     button: {
         secondary: cyan[800]
     }

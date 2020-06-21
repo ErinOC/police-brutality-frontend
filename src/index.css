@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color:#f7f7f7;
+  background-color: #e0e0e0;
 }
 
 code {
@@ -17,6 +17,37 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+
+li {
+  margin-top: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.margin-large {
+  margin: 50px;
+}
+
+.margin {
+  margin: 25px;
+}
+
+.margin-small {
+  margin: 15px;
+}
+
+.cta {
+  background-color:#dec0c0;
+}
+
+.home-icon {
+  font-size: 50px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .expanded {

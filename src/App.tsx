@@ -9,6 +9,7 @@ import axios from 'axios'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import Home from './components/home/home';
 import Locations from './components/locations-pages/locations';
@@ -16,6 +17,7 @@ import Incidents from './components/incidents-pages/incidents';
 import SingleIncident from './components/incidents-pages/single-incident';
 import { assignGeocode } from './shared/helper-functions';
 import { IEvent  } from './shared/interfaces';
+import theme from './assets/mui-theme';
 
 interface IProps { }
 
@@ -67,25 +69,27 @@ export default class App extends React.Component<IProps, IState> {
     return (
       <div>
         <Router>
+          <MuiThemeProvider theme={theme}>
+            <AppBar position="static">
+              <Toolbar>
+                <Link to="/" color="secondary">
+                  <Typography variant="h1">
+                    policebrutality.io
+                  </Typography>
+                </Link>
+              </Toolbar>
+            </AppBar>
 
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h5">
-                  <Link to="/">policebrutality.io</Link>
-              </Typography>
-            </Toolbar>
-          </AppBar>
-
-          <Switch>
-              <Route path="/" exact component={Home}></Route>
-              <Route path="/incidents"
-                     render={(props) => <Incidents allEvents={allEvents}></Incidents>} />
-              <Route path="/incident/:id"
-                     render={(props) => <SingleIncident allEvents={allEvents}></SingleIncident>} />
-              <Route path="/locations"
-                     render={(props) => <Locations allEvents={allEvents}></Locations>} />
-          </Switch>
-
+            <Switch>
+                <Route path="/" exact component={Home}></Route>
+                <Route path="/incidents"
+                      render={(props) => <Incidents allEvents={allEvents}></Incidents>} />
+                <Route path="/incident/:id"
+                      render={(props) => <SingleIncident allEvents={allEvents}></SingleIncident>} />
+                <Route path="/locations"
+                      render={(props) => <Locations allEvents={allEvents}></Locations>} />
+            </Switch>
+          </MuiThemeProvider>
         </Router>
       </div>
     );

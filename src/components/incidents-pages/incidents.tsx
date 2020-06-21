@@ -21,7 +21,7 @@ export default class Incidents extends React.Component<IProps, IState> {
   render() {
     let {allEvents} = this.props;
     return (
-        <div>
+        <div className="margin">
           <EventList
             events={allEvents}>
           </EventList>
