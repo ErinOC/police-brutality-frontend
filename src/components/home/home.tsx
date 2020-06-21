@@ -15,7 +15,7 @@ import videoImg from '../../assets/video-screenshot.png';
 import reportImg from '../../assets/report-incident.png';
 import Button from '@material-ui/core/Button';
 
-const githubLink = 'https://github.com/2020PB/police-brutality/issues/new?assignees=&labels=Incident+report&template=incident-report.md&title=Incident+in+CITY%2C+STATE';
+const githubLink = 'https://github.com/2020PB/police-brutality';
 
 const CardHeaderStyled = styled('h2')({
   backgroundColor: theme.palette.secondary.main,
@@ -57,7 +57,7 @@ export default class Home extends React.Component {
                   <Card className="align-center">
                       <a target="_blank" href={githubLink}>
                         <img src={reportImg} alt="map" className="home-img"/>
-                        <span className="home-link">Report Incident on Github</span>
+                        <span className="home-link">Report Incident (Github)</span>
                       </a>
                     </Card>
                 </Grid>

@@ -20,6 +20,7 @@ export interface IState {
   isExpandOpen: boolean,
   shouldDisplayLocation: boolean;
   linkValue: string;
+  copied: false;
 };
 
 interface IProps {
@@ -63,7 +64,8 @@ export class EventCard extends React.Component<IProps, {}> {
   state: IState = {
     isExpandOpen: false,
     shouldDisplayLocation: true,
-    linkValue: ''
+    linkValue: '',
+    copied: false
   }
 
   componentDidMount() {
@@ -106,7 +108,7 @@ export class EventCard extends React.Component<IProps, {}> {
 
 
   render() {
-    if (!this.props.event) { return "...loading"};
+    if (!this.props.event) { return };
     const { isExpandOpen, shouldDisplayLocation, linkValue } = this.state;
     const { event } = this.props;
 
@@ -134,8 +136,12 @@ export class EventCard extends React.Component<IProps, {}> {
           aria-label="copy link to this incident"
           className="margin-small"
         >
-          Copy Link
-          <LinkOutlinedIcon />
+          {this.state.copied ?
+            'Copied'
+          :
+            'Copy Link'
+          }
+          &nbsp; <LinkOutlinedIcon />
         </Button>
       </CopyToClipboard>
 
@@ -143,12 +149,16 @@ export class EventCard extends React.Component<IProps, {}> {
 
     return (
         <StyledCard>
-          { shouldDisplayLocation ?
-            <LocationHeader>
-              {event.city}, {event.state}
-              <span className="float-right weight-light">{event.date_text}</span>
+            <LocationHeader className="clearfix">
+              { shouldDisplayLocation ?
+                <div>
+                  <span>{event.city}, {event.state}</span>
+                  <span className="float-right weight-regular">{event.date_text}</span>
+                </div>
+              :
+                <span className="float-right weight-regular">{event.date_text}</span>
+              }
             </LocationHeader>
-          : null }
           <CardHeader
             title={ event.name }
           />

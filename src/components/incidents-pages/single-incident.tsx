@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserHistory } from "history";
 import { IEvent } from '../../shared/interfaces';
 import { EventCard } from '../events/event-card';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface IProps {
   allEvents: any
@@ -40,13 +41,19 @@ export default class SingleIncident extends React.Component<IProps, IState> {
 
   render() {
     let { event } = this.state;
-    if (!event) {
-      return <div>...loading</div>
-    }
+
     return (
-        <div className="margin">
-          <EventCard event={event}></EventCard>
-        </div>
+      <div>
+        {!event ?
+          <div className="full-width align-center">
+            <CircularProgress color="secondary" className="margin-large"/>
+          </div>
+        :
+          <div className="margin">
+            <EventCard event={event}></EventCard>
+          </div>
+        }
+      </div>
     )
   }
 }

@@ -19,13 +19,13 @@ interface IState {
 }
 
 const StyledGrid = styled(Grid)({
-  backgroundColor: theme.palette.secondary.main,
-  height: '30px',
+  // backgroundColor: theme.palette.secondary.main,
+  backgroundColor: '#7cc3c3',
+  height: '27px',
   fontWeight: 'bold',
-  color: 'white',
+  color: 'black',
   paddingLeft: '25px',
-  lineHeight: '25px',
-  fontSize: '1.1rem',
+  lineHeight: '27px',
 })
 
 const StyledCard = styled(Card)({
