@@ -14,10 +14,12 @@ import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 export interface IState {
   isExpandOpen: boolean,
   shouldDisplayLocation: boolean;
+  linkValue: string;
 };
 
 interface IProps {
@@ -60,7 +62,8 @@ export class EventCard extends React.Component<IProps, {}> {
 
   state: IState = {
     isExpandOpen: false,
-    shouldDisplayLocation: true
+    shouldDisplayLocation: true,
+    linkValue: ''
   }
 
   componentDidMount() {
@@ -72,8 +75,13 @@ export class EventCard extends React.Component<IProps, {}> {
         shouldDisplayLocation: false
       })
     }
-  }
 
+    let baseUrl = window.location.hostname;
+    let linkValue = `${baseUrl}/incident/${this.props.event.id}`;
+    this.setState({
+      linkValue
+    });
+  }
 
   generateSourceLink = (source: any) => {
     if (source.includes('twitter.com')) {
@@ -99,9 +107,39 @@ export class EventCard extends React.Component<IProps, {}> {
 
   render() {
     if (!this.props.event) { return "...loading"};
-    const { isExpandOpen, shouldDisplayLocation } = this.state;
+    const { isExpandOpen, shouldDisplayLocation, linkValue } = this.state;
     const { event } = this.props;
-    let individualLink = `/incident/${event.id}`;
+
+    let viewMoreButton = (
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={ this.handleExpandClick }
+        aria-expanded={ isExpandOpen }
+        aria-label="show more"
+        className="margin-small"
+      >
+        View More Coverage
+        <ExpandMoreIcon className={ clsx('expand', {'expanded': isExpandOpen}) }/>
+      </Button>
+    )
+
+    let copyLinkButton = (
+      <CopyToClipboard
+        text={linkValue}
+        onCopy={() => this.setState({copied: true})}>
+        <Button
+          variant="contained"
+          color="secondary"
+          aria-label="copy link to this incident"
+          className="margin-small"
+        >
+          Copy Link
+          <LinkOutlinedIcon />
+        </Button>
+      </CopyToClipboard>
+
+    )
 
     return (
         <StyledCard>
@@ -115,7 +153,6 @@ export class EventCard extends React.Component<IProps, {}> {
             title={ event.name }
           />
           {event.links.map((link: ILink, index) => {
-
             if (index === 0) {
               return (
                 <div key={`${event.id}-media`}>
@@ -136,40 +173,14 @@ export class EventCard extends React.Component<IProps, {}> {
 
           {event.links.length > 1 ?
               <CardActions disableSpacing className="cta">
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={ this.handleExpandClick }
-                  aria-expanded={ isExpandOpen }
-                  aria-label="show more"
-                  className="margin-small"
-                >
-                  View More Coverage
-                  <ExpandMoreIcon className={ clsx('expand', {'expanded': isExpandOpen}) }/>
-                </Button>
+                {viewMoreButton}
                 <span>&nbsp;</span>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  aria-label="copy link to this incident"
-                  className="margin-small"
-                >
-                  Copy Link
-                  <LinkOutlinedIcon />
-                </Button>
+                {copyLinkButton}
 
               </CardActions>
             :
-                <CardActions disableSpacing className="cta">
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  aria-label="copy link to this incident"
-                  className="margin-small"
-                >
-                  Copy Link
-                  <LinkOutlinedIcon />
-                </Button>
+              <CardActions disableSpacing className="cta">
+                 {copyLinkButton}
               </CardActions>
             }
 
