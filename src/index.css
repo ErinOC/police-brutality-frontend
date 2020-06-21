@@ -40,7 +40,7 @@ a {
 }
 
 .cta {
-  background-color:#dec0c0;
+  background-color:#add2ce;
 }
 
 .home-icon {
@@ -48,6 +48,41 @@ a {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.home-link {
+  display: block;
+  width: 100%;
+  font-size: 20px;
+  padding: 15px 0;
+  background-color: #00838f;
+  color: white;
+}
+
+.home-link:hover {
+  background-color: #066c75;
+}
+
+.home-img {
+  width: 80%;
+  margin: 10%;
+  filter: grayscale(100%);
+}
+
+.home-img:hover {
+  filter: grayscale(0%);
+}
+
+.float-right {
+  float: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.weight-light {
+  font-weight: 200;
 }
 
 .expanded {

@@ -8,10 +8,16 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { styled } from '@material-ui/core/styles';
 import CalendarTodayRoundedIcon from '@material-ui/icons/CalendarTodayRounded';
-import DateRangeRoundedIcon from '@material-ui/icons/DateRangeRounded';
 import CreateRoundedIcon from '@material-ui/icons/CreateRounded';
+import LocationOnRoundedIcon from '@material-ui/icons/LocationOnRounded';
+import mapImg from '../../assets/map.png';
+import videoImg from '../../assets/video-screenshot.png';
+import reportImg from '../../assets/report-incident.png';
+import Button from '@material-ui/core/Button';
 
-const SectionHeader = styled('h3')({
+const githubLink = 'https://github.com/2020PB/police-brutality/issues/new?assignees=&labels=Incident+report&template=incident-report.md&title=Incident+in+CITY%2C+STATE';
+
+const CardHeaderStyled = styled('h2')({
   backgroundColor: theme.palette.secondary.main,
   padding: '10px',
   margin: 0,
@@ -32,38 +38,26 @@ export default class Home extends React.Component {
         <div className="margin-large">
             <Grid container spacing={6}>
                 <Grid item xs={12} sm={4}>
-                    <Card>
-                      <CardContent>
-                        <DateRangeRoundedIcon/>
-                      </CardContent>
+                    <Card className="align-center">
                       <Link to="/incidents">
-                        <CardHeader
-                          title='Recent Incidents'
-                        />
+                        <img src={videoImg} alt="map" className="home-img" />
+                        <span  className="home-link">View All Incidents</span>
                       </Link>
                     </Card>
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                    <Card>
-                      <CardContent>
-                      <CalendarTodayRoundedIcon/>
-                      </CardContent>
+                    <Card className="align-center">
                       <Link to="/locations">
-                        <CardHeader
-                          title='View Map'
-                        />
+                        <img src={mapImg} alt="map" className="home-img" />
+                        <span  className="home-link">View by City</span>
                       </Link>
                     </Card>
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <Card>
-                      <CardContent>
-                        <CreateRoundedIcon/>
-                      </CardContent>
-                      <a target="_blank" href="http://www.github.com">
-                        <CardHeader
-                          title='Report an Event (Github)'
-                        />
+                  <Card className="align-center">
+                      <a target="_blank" href={githubLink}>
+                        <img src={reportImg} alt="map" className="home-img"/>
+                        <span className="home-link">Report Incident on Github</span>
                       </a>
                     </Card>
                 </Grid>

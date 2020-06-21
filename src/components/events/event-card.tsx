@@ -36,7 +36,8 @@ const StyledCard = styled(Card)({
 });
 
 const LocationHeader = styled('h3')({
-  backgroundColor: theme.palette.secondary.main,
+  // backgroundColor: theme.palette.secondary.main,
+  backgroundColor: theme.palette.primary.main,
   padding: '10px',
   margin: 0,
   fontWeight: 'bold',
@@ -46,7 +47,8 @@ const LocationHeader = styled('h3')({
 const Video = styled('video')({
   width: '100%',
   height: 'auto',
-  maxHeight: '500px'
+  maxHeight: '500px',
+  backgroundColor: '#a7a7a7'
 });
 
 
@@ -106,11 +108,11 @@ export class EventCard extends React.Component<IProps, {}> {
           { shouldDisplayLocation ?
             <LocationHeader>
               {event.city}, {event.state}
+              <span className="float-right weight-light">{event.date_text}</span>
             </LocationHeader>
           : null }
           <CardHeader
             title={ event.name }
-            subheader= { event.date_text }
           />
           {event.links.map((link: ILink, index) => {
 
@@ -140,15 +142,17 @@ export class EventCard extends React.Component<IProps, {}> {
                   onClick={ this.handleExpandClick }
                   aria-expanded={ isExpandOpen }
                   aria-label="show more"
+                  className="margin-small"
                 >
                   View More Coverage
                   <ExpandMoreIcon className={ clsx('expand', {'expanded': isExpandOpen}) }/>
                 </Button>
-
+                <span>&nbsp;</span>
                 <Button
                   variant="contained"
-                  color="primary"
+                  color="secondary"
                   aria-label="copy link to this incident"
+                  className="margin-small"
                 >
                   Copy Link
                   <LinkOutlinedIcon />
@@ -159,8 +163,9 @@ export class EventCard extends React.Component<IProps, {}> {
                 <CardActions disableSpacing className="cta">
                 <Button
                   variant="contained"
-                  color="primary"
+                  color="secondary"
                   aria-label="copy link to this incident"
+                  className="margin-small"
                 >
                   Copy Link
                   <LinkOutlinedIcon />

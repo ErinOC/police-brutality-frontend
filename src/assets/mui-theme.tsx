@@ -9,9 +9,8 @@ const theme = createMuiTheme({
       dark: cyan[900],
     },
     primary: { // Reddish
-      main: '#5c0000',
-      light: '#c45953',
-      // #8f2a2a
+      // main: '#5c0000',
+      main: '#8f2a2a',
     },
     text: {
       primary: grey[900],
@@ -20,14 +19,15 @@ const theme = createMuiTheme({
   },
   typography: {
     h1: {
-      fontSize: '20px',
+      fontSize: '27px',
       color: '#FFFFFF'
     },
     h2: {
       color: grey[900]
     },
-    h5: {
-      color: grey[900]
+    h4: {
+      color: grey[900],
+      fontSize: '1.6rem',
     },
     button: {
         secondary: cyan[800]
