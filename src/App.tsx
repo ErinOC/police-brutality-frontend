@@ -18,6 +18,8 @@ import SingleIncident from './components/incidents-pages/single-incident';
 import { assignGeocode } from './shared/helper-functions';
 import { IEvent  } from './shared/interfaces';
 import theme from './assets/mui-theme';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 interface IProps { }
 
@@ -63,9 +65,6 @@ export default class App extends React.Component<IProps, IState> {
 
   render() {
     let allEvents = this.state.allEvents;
-    if (this.state.isFetching) {
-      return <div>...loading</div>
-    }
     return (
       <div>
         <Router>
@@ -79,16 +78,21 @@ export default class App extends React.Component<IProps, IState> {
                 </Link>
               </Toolbar>
             </AppBar>
-
-            <Switch>
-                <Route path="/" exact component={Home}></Route>
-                <Route path="/incidents"
-                      render={(props) => <Incidents allEvents={allEvents}></Incidents>} />
-                <Route path="/incident/:id"
-                      render={(props) => <SingleIncident allEvents={allEvents}></SingleIncident>} />
-                <Route path="/locations"
-                      render={(props) => <Locations allEvents={allEvents}></Locations>} />
-            </Switch>
+            {this.state.isFetching ?
+              <div className="full-width align-center">
+                <CircularProgress color="secondary" className="margin-large"/>
+              </div>
+            :
+              <Switch>
+                  <Route path="/" exact component={Home}></Route>
+                  <Route path="/incidents"
+                        render={(props) => <Incidents allEvents={allEvents}></Incidents>} />
+                  <Route path="/incident/:id"
+                        render={(props) => <SingleIncident allEvents={allEvents}></SingleIncident>} />
+                  <Route path="/locations"
+                        render={(props) => <Locations allEvents={allEvents}></Locations>} />
+              </Switch>
+            }
           </MuiThemeProvider>
         </Router>
       </div>
